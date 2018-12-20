@@ -6,6 +6,52 @@
 
 `create-index` program creates (and maintains) ES6 `./index.js` file in target directories that imports and exports sibling files and directories.
 
+## ComponentModules
+
+I extended the create-index NPM module to add an additional option to the command line. 
+
+```
+--isComponentModule -c 
+```
+
+### What is a component module?
+
+To start, lets first lay out what create-index accomplishes for us and then explain why I created the extra option.
+
+create-index parses through node modules and generates export default in your index.js file simplifying the process of developing a module into by designing classes and allowing the automated system to simplify your imports.
+
+create-index grabs every single .js file in the directory and adds it to your index.js file, however in many cases this is not required and often some files are not designed to be public facing files.  This is where the component module concept comes in.
+
+Most components whether it be React, Vue etc. is going to be built in a single file and then imported from a view or screen.  However some times a single file is not the best practice for building your component.  Assuming you would be reusing all of the parts of a larger component you would just break it up into a few different global components, but if you have no intentions of using the components elsewhere, why import it into the module?
+
+When you enable -c or component modules, you enable a secondary option for folders.  The automated process will search for a filename that shares the same name as the folder and if it exists, instead of importing the entire folder it imports a single file.  This enables you to control how the module is going to be seen when imported and allows you to determine the publicly facing components.
+
+## Component Module Example
+```sh
+> tree ./
+./src
+├── Main
+├───── Main.js
+├───── LoginPopup.js
+├───── UserData.js
+├── foo.js
+└── index.js
+
+1 directories, 5 files
+
+> create-index ./src -c -r 
+
+Generates files ./src/Main/index.js, ./src/index.js
+```
+
+./src/Main/index.js
+```js
+export { default as Main } from './Main.js';
+
+```
+
+
+
 ## Example
 
 ```sh
