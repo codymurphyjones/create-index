@@ -48,7 +48,7 @@
     "create-index": "node ./dist/bin/create-index ./src/utilities",
     "create": "node ./dist/bin/create-index -r -c ./src/utilities",
     "lint": "cross-env NODE_ENV=development eslint ./src ./tests",
-    "precommit": "npm run test",
+    "precomm": "npm run test",
     "test": "npm run build && npm run lint && cross-env NODE_ENV=development mocha --compilers js:babel-register"
   },
   "version": "1.1.0"
