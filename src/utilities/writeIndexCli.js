@@ -20,6 +20,7 @@ export default (directoryPaths, options = {}) => {
     log('Update index:', options.updateIndex ? chalk.green('true') : chalk.red('false'));
   } else {
     log('Recursive:', options.recursive ? chalk.green('true') : chalk.red('false'));
+    log('Component Modules:', options.isComponentModule ? chalk.green('true') : chalk.red('false'));
     log('Ignore unsafe:', options.ignoreUnsafe ? chalk.green('true') : chalk.red('false'));
     log('Extensions:', chalk.green(options.extensions));
   }
@@ -50,7 +51,8 @@ export default (directoryPaths, options = {}) => {
     const siblings = readDirectory(directoryPath, {
       config,
       extensions: options.extensions,
-      silent: options.ignoreUnsafe
+      silent: options.ignoreUnsafe,
+      isComponentModule: options.isComponentModule
     });
 
     const indexCode = createIndexCode(siblings, {

@@ -45,6 +45,14 @@ const argv = yargs
       type: 'array'
     }
   })
+  .options({
+    isComponentModule: {
+      alias: 'c',
+      default: false,
+      description: 'Enables the discovery of single component modules providing a public interface to components housed within a folder.  These modules are determined by having a .js file with the same name as the FolderName.',
+      type: 'boolean'
+    }
+  })
   .example('create-index ./src ./src/utilities', 'Creates or updates an existing create-index index file in the target (./src, ./src/utilities) directories.')
   .example('create-index --update ./src ./tests', 'Finds all create-index index files in the target directories and descending directories. Updates found index files.')
   .example('create-index ./src --extensions js jsx', 'Creates or updates an existing create-index index file in the target (./src) directory for both .js and .jsx extensions.')
@@ -55,5 +63,6 @@ writeIndexCli(argv._, {
   extensions: argv.extensions,
   ignoreUnsafe: argv.ignoreUnsafe,
   recursive: argv.recursive,
-  updateIndex: argv.update
+  updateIndex: argv.update,
+  isComponentModule: argv.isComponentModule
 });

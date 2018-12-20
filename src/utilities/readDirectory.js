@@ -71,6 +71,14 @@ const removeIgnoredFiles = (files, ignorePatterns = []) => {
   });
 };
 
+const isComponentModule = (fileName, directoryPath) => {
+        const name = stripExtension(fileName);
+        //console.log(fileName + ": " + name);
+  
+        const directoryName = directoryPath.substr(directoryPath.lastIndexOf('/') + 1);
+        return directoryName == name;
+};
+
 export default (directoryPath, options = {}) => {
   if (!validateTargetDirectory(directoryPath, {silent: options.silent})) {
     return false;
@@ -120,6 +128,21 @@ export default (directoryPath, options = {}) => {
 
   children = removeDuplicates(children, extensions[0]);
   children = removeIgnoredFiles(children, config.ignore);
+  
+  var processComponent = children;
+  
+  if(options.isComponentModule) {
+      processComponent = _.filter(processComponent, (fileName) => {
+
+        if(!isComponentModule(fileName, directoryPath))
+            return false;
+
+        return true;
+    });
+    
+    if(processComponent.length > 0)
+        children = processComponent;
+  }
 
   return children.sort();
 };
