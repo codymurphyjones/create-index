@@ -46,7 +46,8 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production babel --source-maps --copy-files ./src --out-dir ./dist",
     "create-index": "node ./dist/bin/create-index ./src/utilities",
-    "create": "node ./dist/bin/create-index -r -c ./src/utilities",
+    "create": "node ./dist/bin/create-index -r -c",
+    "it": "npm run create -- \"./Ideal Structure/src\" -x js vue",
     "lint": "cross-env NODE_ENV=development eslint ./src ./tests",
     "precomm": "npm run test",
     "test": "npm run build && npm run lint && cross-env NODE_ENV=development mocha --compilers js:babel-register"

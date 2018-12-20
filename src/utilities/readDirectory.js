@@ -83,7 +83,6 @@ export default (directoryPath, options = {}) => {
   if (!validateTargetDirectory(directoryPath, {silent: options.silent})) {
     return false;
   }
-
   const {
     extensions = ['js'],
     config = {}
@@ -96,7 +95,7 @@ export default (directoryPath, options = {}) => {
   children = _.filter(children, (fileName) => {
     const absolutePath = path.resolve(directoryPath, fileName);
     const isDirectory = fs.statSync(absolutePath).isDirectory();
-
+    console.log(fileName);
     if (!isSafeName(fileName)) {
       return false;
     }
@@ -125,7 +124,8 @@ export default (directoryPath, options = {}) => {
 
     return true;
   });
-
+  
+  //console.log(children);
   children = removeDuplicates(children, extensions[0]);
   children = removeIgnoredFiles(children, config.ignore);
   
@@ -143,6 +143,8 @@ export default (directoryPath, options = {}) => {
     if(processComponent.length > 0)
         children = processComponent;
   }
+  
+  console.log(children);
 
   return children.sort();
 };
